@@ -20,6 +20,7 @@ services:
     command: npm start
     volumes:
       - .:/server
+      - /server/node_modules
     ports:
       - "3333:3000"
     depends_on:
@@ -30,6 +31,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./client:/client
+      - /client/node_modules
     ports:
       - "8888:8080"
     depends_on:
