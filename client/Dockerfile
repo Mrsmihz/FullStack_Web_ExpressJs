@@ -4,8 +4,8 @@ WORKDIR /client
 
 COPY package*.json /client/
 
-RUN npm install
 RUN npm install @vue/cli -g
+RUN npm install
 COPY . /client/
 EXPOSE 8080
 
