@@ -1,21 +1,54 @@
 <template>
-  <div class="container">
-    <h1>AccountService Test</h1>
-    <div class="register-container">
-      <form method="POST">
-        <input v-model="username" placeholder="username">
-        <input v-model="password" placeholder="password">
-        <input v-model="first_name" placeholder="Firstname">
-        <input v-model="last_name" placeholder="Lastname">
-        <input v-model="email" placeholder="Email">
-        <button v-on:click="createAccount">submit</button>
-      </form>
-    </div>
+  <div>
+    <h1>{{ msg }}</h1>
+    <b-form @submit="createAccount" method="POST" class="mt-3">
+      <b-form-group>
+        <b-form-input
+        type="text"
+        placeholder="Username"
+        v-model="username">
+
+        </b-form-input>
+      </b-form-group>
+      <b-form-group>
+        <b-form-input
+        type="password"
+        placeholder="Password"
+        v-model="password">
+
+        </b-form-input>
+      </b-form-group>
+      <b-form-group>
+        <b-form-input
+        type="text"
+        placeholder="First Name"
+        v-model="first_name">
+
+        </b-form-input>
+      </b-form-group>
+      <b-form-group>
+        <b-form-input
+        type="text"
+        placeholder="Last Name"
+        v-model="last_name">
+
+        </b-form-input>
+      </b-form-group>
+      <b-form-group>
+        <b-form-input
+        type="email"
+        placeholder="Email"
+        v-model="email">
+
+        </b-form-input>
+      </b-form-group>
+      <b-button type="submit" variant="primary">Submit</b-button>
+    </b-form>
   </div>
 </template>
 
 <script>
-import AccountService from '../AccountService';
+import AccountService from '../services/AccountService';
 
 export default {
   name: 'Register',
@@ -28,6 +61,7 @@ export default {
       email:'',
     }
   },
+  props:['msg'],
   methods:{
     createForm:function(){
       let form = new FormData();
@@ -40,7 +74,7 @@ export default {
     },
     async createAccount(e){
       e.preventDefault();
-      if (await AccountService.createAccount(this.createForm()) == 'success'){
+      if (await AccountService.createAccount(this.createForm()) == 'OK'){
         console.log('success by vuejs');
       }
     }
@@ -50,10 +84,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.register-container{
-  background-color:azure;
 
-}
 h3 {
   margin: 40px 0 0;
 }
