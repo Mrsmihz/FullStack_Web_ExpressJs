@@ -9,8 +9,10 @@ app.use(cors());
 
 
 const posts = require('./routes/api/posts');
+const register = require('./routes/api/register');
 
 app.use('/api/posts', posts);
+app.use('/api/register', register);
 
 const port = process.env.PORT || 3000;
 
