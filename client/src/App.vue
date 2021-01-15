@@ -1,17 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Register />
+    <b-container fluid="md">
+      <b-row>
+        <b-col>
+          <Login v-if="login"/>
+          <Register v-if="register"/>
+          <div class="mt-5">
+            <b-button class="mr-3" v-on:click="showLogin">Login</b-button>
+            <b-button v-on:click="showRegister">Register</b-button>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import Register from './components/Register.vue';
+import Register from './components/Register'
+import Login from './components/Login'
 
 export default {
   name: 'App',
+  data(){
+    return{
+      login:true,
+      register:false,
+    }
+  },
   components: {
-    Register
+    Register,
+    Login
+  },
+  methods:{
+    showLogin:function(){
+      this.login = true;
+      this.register = false;
+    },
+    showRegister:function(){
+      this.login = false;
+      this.register = true;
+    }
   }
 }
 </script>
