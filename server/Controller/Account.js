@@ -44,10 +44,29 @@ exports.accountLogin = function(req, res){
 
 exports.getSession = function(req, res){
     var store = req.sessionStore;
+    var found = false;
     if (store.sessions){
         for (var sid in store.sessions){
             var ses = JSON.parse(store.sessions[sid]);
-            console.log(ses.user);
+            if (ses.user){
+                res.send(ses.user);
+                found = true;
+                break;
+            }
+        }
+        if (!found){
+            res.send('not found');
+        }
+    }
+}
+
+exports.userLogout = function(req, res){
+    var store = req.sessionStore;
+    if (store.sessions){
+        for (var sid in store.sessions){
+            store.destroy(sid, function(){
+                console.log("deleted " + sid);
+            });
         }
     }
 }

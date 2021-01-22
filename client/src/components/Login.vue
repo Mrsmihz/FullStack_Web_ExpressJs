@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form @submit="Login" method="POST">
+        <b-form @submit="Login" method="POST" class="mt-3">
             <b-form-group>
                 <b-form-input
                 type="text"
@@ -19,7 +19,7 @@
 
                 </b-form-input>
             </b-form-group>
-            <b-button type="submit" variant="primary">Submit</b-button>
+            <b-button type="submit" variant="primary">Login</b-button>
         </b-form>
     </div>
 </template>
@@ -31,7 +31,7 @@ export default {
     data() {
         return {
             username:'',
-            password:''
+            password:'',
         }
     },
     methods:{
@@ -44,7 +44,10 @@ export default {
         async Login(e){
             e.preventDefault();
             if (await AccountService.Login(this.createForm()) === "OK"){
-                console.log('logged in');
+                await AccountService.getSession().then(response => {
+                    this.$root.$refs.App.user = response;
+                    this.$root.$refs.App.showIndex();
+                })
             }
         }
     }

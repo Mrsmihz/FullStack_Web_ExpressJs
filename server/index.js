@@ -6,14 +6,17 @@ const { MemoryStore } = require('express-session');
 
 
 const app = express();
-
-app.use(session({
+const sess = {
     secret:'doggo',
     store:new MemoryStore(),
     maxAge:3600000,
     resave:false,
     saveUninitialized:false,
-}));
+    cookie:{}
+}
+sess.cookie.maxAge = 3600000;
+
+app.use(session(sess));
 app.use(bodyParser.json());
 app.use(cors());
 

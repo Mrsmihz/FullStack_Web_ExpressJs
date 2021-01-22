@@ -3,12 +3,8 @@
     <b-container fluid="md">
       <b-row>
         <b-col>
-          <Login v-if="login"/>
-          <Register v-if="register"/>
-          <div class="mt-5">
-            <b-button class="mr-3" v-on:click="showLogin">Login</b-button>
-            <b-button v-on:click="showRegister">Register</b-button>
-          </div>
+          <LoginAndRegister v-show="login_register" ref="login_register"/>
+          <Index v-show="index" ref="index"/>
         </b-col>
       </b-row>
     </b-container>
@@ -16,29 +12,48 @@
 </template>
 
 <script>
-import Register from './components/Register'
-import Login from './components/Login'
-
+import LoginAndRegister from './components/LoginAndRegiser'
+import Index from './components/Index'
+import AccountService from './services/AccountService'
 export default {
+  beforeCreate(){
+    AccountService.getSession().then(response => {
+      if (response != 'not found'){
+        this.user = response;
+        this.$nextTick(function(){
+          this.showIndex(this.user);
+        })
+      }
+      else{
+        this.$refs.login_register.showLogin();
+        this.$nextTick(function(){
+          this.login_register = true;
+        })
+      }
+    })
+  },
   name: 'App',
   data(){
     return{
-      login:true,
-      register:false,
+      login_register:false,
+      index:false,
+      user:{}
     }
   },
   components: {
-    Register,
-    Login
+    LoginAndRegister,
+    Index
+  },
+  created(){
+      this.$root.$refs.App = this;
   },
   methods:{
-    showLogin:function(){
-      this.login = true;
-      this.register = false;
-    },
-    showRegister:function(){
-      this.login = false;
-      this.register = true;
+    showIndex:function(){
+      this.$refs.index.setUser(this.user);
+      this.$nextTick(function(){
+        this.login_register = false;
+        this.index = true;
+      })
     }
   }
 }
