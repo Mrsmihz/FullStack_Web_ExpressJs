@@ -43,11 +43,20 @@ export default {
         },
         async Login(e){
             e.preventDefault();
-            if (await AccountService.Login(this.createForm()) === "OK"){
+            var result = await AccountService.Login(this.createForm());
+            if (result.status == 200){
                 await AccountService.getSession().then(response => {
-                    this.$root.$refs.App.user = response;
-                    this.$root.$refs.App.showIndex();
+                    if (response.status == 200){
+                        this.$root.$refs.App.user = response.data;
+                        this.$root.$refs.App.showIndex();
+                    }
+                    else if (response.status == 404){
+                        console.log("login failed");
+                    }
                 })
+            }
+            else if (result.status == 404) {
+                console.log('login failed');
             }
         }
     }
