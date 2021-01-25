@@ -7,28 +7,38 @@ class AccountService{
     static createAccount(form){
         var object = {};
         form.forEach((value, key) => object[key] = value);
-        var json = JSON.stringify(object);
+        var data = JSON.stringify(object);
+        var json = JSON.parse(data);
         console.log(json);
         return axios.post(register, {
             json
         }).then(response => {
-            return response.data;
+            console.log(response);
+            return response;
+        }).catch(error => {
+            console.log(error.response);
+            return error.response;
         })
     }
     static Login(form){
         var object = {};
         form.forEach((value, key) => object[key] = value);
-        var json = JSON.stringify(object);
+        var data = JSON.stringify(object);
+        var json = JSON.parse(data);
         return axios.post(login, {
             json
         }).then(response => {
-            return response.data;
+            console.log(response);
+            return response;
+        }).catch(error => {
+            console.log(error.response);
+            return error.response;
         })
     }
 
     static getSession(){
         return axios.get(login).then(response => {
-            return response.data;
+            return response;
         })
     }
     static logout(){
