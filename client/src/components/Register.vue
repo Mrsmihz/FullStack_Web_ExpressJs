@@ -74,9 +74,25 @@ export default {
     },
     async createAccount(e){
       e.preventDefault();
-      if (await AccountService.createAccount(this.createForm()) == 'OK'){
+      var result = await AccountService.createAccount(this.createForm());
+      if (result.status == 201){
         console.log('success by vuejs');
+        this.clearForm();
+        this.$root.$refs.App.$refs.login_register.showLogin();
       }
+      else if (result.status == 409){
+        console.log('duplicate');
+      }
+      else if (result.status == 404){
+        console.log('error');
+      }
+    },
+    clearForm:function(){
+      this.username = '',
+      this.password = '',
+      this.first_name = '',
+      this.last_name = '',
+      this.email = ''
     }
   }
 }
