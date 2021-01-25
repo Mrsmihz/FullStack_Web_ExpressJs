@@ -15,16 +15,24 @@
 import LoginAndRegister from './components/LoginAndRegiser'
 import Index from './components/Index'
 import AccountService from './services/AccountService'
+
 export default {
-  beforeCreate(){
-    AccountService.getSession().then(response => {
-      if (response != 'not found'){
-        this.user = response;
+  async beforeCreate(){
+    await AccountService.getSession().then(response => {
+      if (response.status == 200){
+        this.user = response.data;
         this.$nextTick(function(){
           this.showIndex(this.user);
         })
       }
-      else{
+      else if (response.status == 404) {
+        this.$refs.login_register.showLogin();
+        this.$nextTick(function(){
+          this.login_register = true;
+        })
+      }
+    }).catch(error => {
+      if (error.response.status == 404) {
         this.$refs.login_register.showLogin();
         this.$nextTick(function(){
           this.login_register = true;
@@ -42,7 +50,7 @@ export default {
   },
   components: {
     LoginAndRegister,
-    Index
+    Index,
   },
   created(){
       this.$root.$refs.App = this;
