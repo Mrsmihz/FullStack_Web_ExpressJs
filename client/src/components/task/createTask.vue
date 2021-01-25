@@ -50,7 +50,5 @@
 </script>
 
 <style scoped>
-    .box{
-        
-    }
+    
 </style>
