@@ -24,7 +24,9 @@ app.use(cors());
 const posts = require('./routes/api/posts');
 const register = require('./routes/api/register');
 const login = require('./routes/api/login');
+const task = require('./routes/api/task');
 
+app.use('/api/task', task);
 app.use('/api/posts', posts);
 app.use('/api/register', register);
 app.use('/api/login', login);
