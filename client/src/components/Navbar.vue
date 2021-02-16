@@ -52,14 +52,7 @@ export default {
             this.email = data.email;
         },
         showCreateTask:function(){
-            if (this.$root.$refs.App.$refs.index.createTask){
-                this.$root.$refs.App.$refs.index.createTask = false;
-                this.$root.$refs.App.$refs.index.showTask = true;
-            }
-            else{
-                this.$root.$refs.App.$refs.index.createTask = true;
-                this.$root.$refs.App.$refs.index.showTask = false;
-            }
+            this.$root.$refs.Index.showCreateTask();
         }
     }
 }

@@ -13,6 +13,9 @@ import createTask from '../components/task/createTask'
 import showTask from '../components/task/showTask'
 
 export default {
+    created(){
+        this.$root.$refs.Index = this;
+    },
     name:'Index',
     data(){
         return {

@@ -16,9 +16,10 @@ exports.createTask = function(req, res){
 }
 
 exports.editTask = function(req, res){
-    var stmt = "update Tasks(title, desc) values(?,?) where id=?";
+    var stmt = "update Tasks set `title`=?, `desc`=? where id=?";
     var data = req.body.json;
-    sql.query(stmt, [data.title, data.desc, data.id], function(err, result){
+    var params = req.params;
+    sql.query(stmt, [data.title, data.desc, params.id], function(err, result){
         if (err){
             res.send('FAIL');
         }
@@ -30,13 +31,13 @@ exports.editTask = function(req, res){
 
 exports.deleteTask = function(req, res){
     var stmt = "delete from Tasks where id=?";
-    var data = req.body.json;
+    var data = req.params;
     sql.query(stmt, [data.id], function(err, result){
         if (err){
-            res.send('FAIL');
+            res.sendStatus(404);
         }
         else{
-            res.send('OK');
+            res.sendStatus(200);
         }
     })
 }

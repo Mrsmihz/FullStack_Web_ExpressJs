@@ -22,7 +22,7 @@
         methods:{
             createForm:function(){
                 let form = new FormData();
-                this.owner = this.$root.$refs.App.$refs.index.id;
+                this.owner = this.$root.$refs.Index.id;
                 form.append('title', this.title);
                 form.append('desc', this.desc);
                 form.append('owner', this.owner);
@@ -34,7 +34,7 @@
                 if (result.status == 201){
                     console.log('ok');
                     this.clearForm();
-                    console.log(this.$root.$refs.App.$refs.index.showCreateTask());
+                    console.log(this.$root.$refs.Index.showCreateTask());
                 }
                 else if (result.status == 404){
                     console.log('created failed')

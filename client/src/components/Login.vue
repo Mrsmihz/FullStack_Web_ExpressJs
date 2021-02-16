@@ -47,8 +47,7 @@ export default {
             if (result.status == 200){
                 await AccountService.getSession().then(response => {
                     if (response.status == 200){
-                        this.$root.$refs.App.user = response.data;
-                        this.$root.$refs.App.showIndex();
+                        this.$root.$refs.App.showIndex(response.data);
                     }
                     else if (response.status == 404){
                         console.log("login failed");

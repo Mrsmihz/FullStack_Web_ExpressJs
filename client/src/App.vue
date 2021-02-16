@@ -20,9 +20,9 @@ export default {
   async beforeCreate(){
     await AccountService.getSession().then(response => {
       if (response.status == 200){
-        this.user = response.data;
+        console.log(response.data);
         this.$nextTick(function(){
-          this.showIndex(this.user);
+          this.showIndex(response.data);
         })
       }
       else if (response.status == 404) {
@@ -45,7 +45,6 @@ export default {
     return{
       login_register:false,
       index:false,
-      user:{}
     }
   },
   components: {
@@ -56,8 +55,8 @@ export default {
       this.$root.$refs.App = this;
   },
   methods:{
-    showIndex:function(){
-      this.$refs.index.setUser(this.user);
+    showIndex:function(user){
+      this.$refs.index.setUser(user);
       this.$nextTick(function(){
         this.login_register = false;
         this.index = true;
